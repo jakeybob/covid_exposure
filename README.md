@@ -39,7 +39,7 @@ Here's the cumulative count of cases and keys downloaded (from the first day of 
 ![](/pics/plot_cum_cases_keys.png)
 
 ## Cumulative Cases / Keys Since Septermer 17th
-The app reached one million downloads on September 17th, and starting from then we can see that about 4/5 new cases have been registered. Although note that as this is only a few days worth of data (and relative lag may be of the order of a few days), this is quite speculative.
+The app reached one million downloads on September 17th, and starting from then we can see that about 3/5 new cases have been registered. Although note that as this is only a few days worth of data (and relative lag may be of the order of a few days), this is quite speculative.
 
 ![](/pics/plot_cum_cases_keys_sep17.png)
 

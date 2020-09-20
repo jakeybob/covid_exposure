@@ -101,11 +101,11 @@ ggsave("pics/plot_cases_keys.png", dpi = 300, width = 200, height = 133, units =
 
 # cumulative cases / keys
 min_date <- filter(df, key_count > 0)$date %>% min(na.rm = TRUE) # date of first non-zero key count
-min_date <- dmy("17/09/2020") # date the app reached 1M downloads
+# min_date <- dmy("17/09/2020") # date the app reached 1M downloads
 
 combined_daily %>%
   filter(date >= min_date) %>%
-  replace_na(list(key_count = 0, new_cases = 0)) %>%
+  # replace_na(list(key_count = 0, new_cases = 0)) %>%
   mutate(cum_key_count = cumsum(key_count),
          cum_new_cases = cumsum(new_cases)) %>%
   pivot_longer(c(cum_new_cases, cum_key_count), names_to = "case_type", values_to = "count") %>%
@@ -125,6 +125,7 @@ combined_daily %>%
                      legend.text = element_text(face = "bold", size = 9)) +
   labs(x = "", y = "", fill = "", 
        title = "Scotland COVID-19 Cases & Keys",
+       # title = "Scotland COVID-19 Cases & Keys Since 1M Downloads",
        subtitle = expression(paste(bold("cumulative new cases "), "and", bold(" cumulative new keys "), "(downloaded by the ", italic("protect.scot")," app)")))
 
 ggsave("pics/plot_cum_cases_keys.png", dpi = 300, width = 200, height = 133, units = "mm")
