@@ -5,4 +5,6 @@
 .DS_Store
 json_exposure_files
 ExposureChecks*.json
+*exposure-checks.json
 scratch
+README.html

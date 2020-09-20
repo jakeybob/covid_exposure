@@ -101,7 +101,7 @@ ggsave("pics/plot_cases_keys.png", dpi = 300, width = 200, height = 133, units =
 
 # cumulative cases / keys
 min_date <- filter(df, key_count > 0)$date %>% min(na.rm = TRUE) # date of first non-zero key count
-# min_date <- dmy("17/09/2020") # date the app reached 1M downloads
+min_date <- dmy("17/09/2020") # date the app reached 1M downloads
 
 combined_daily %>%
   filter(date >= min_date) %>%
