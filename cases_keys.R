@@ -100,8 +100,27 @@ ggsave("pics/plot_cases_keys.png", dpi = 300, width = 200, height = 133, units =
 
 
 # cumulative cases / keys
-min_date <- filter(df, key_count > 0)$date %>% min(na.rm = TRUE) # date of first non-zero key count
-# min_date <- dmy("17/09/2020") # date the app reached 1M downloads
+# min_date <- filter(df, key_count > 0)$date %>% min(na.rm = TRUE) # date of first non-zero key count
+min_date <- dmy("17/09/2020") # date the app reached 1M downloads
+
+# ratio of cumulative cases to keys
+combined_daily %>%
+  filter(date >= min_date) %>%
+  mutate(cum_key_count = cumsum(key_count),
+         cum_new_cases = cumsum(new_cases),
+         ratio = cum_key_count/cum_new_cases) %>% 
+  filter(date != max(date)) %>% # most decent entry may have quite incomplete case data
+  ggplot(aes(x = date, y = ratio)) +
+  geom_line() + geom_point() +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  theme_bw() + theme(panel.grid.minor = element_blank(),
+                     text = element_text(family = "Lato"),
+                     legend.position = "bottom",
+                     legend.box.margin = margin(-10, 0, 0, 0),
+                     axis.text = element_text(face = "bold", size = 10),
+                     plot.title = element_text(face = "bold", size = 16),
+                     plot.subtitle = element_text(size = 11, margin=margin(0, 0, 10, 0)),
+                     legend.text = element_text(face = "bold", size = 9)) 
 
 combined_daily %>%
   filter(date >= min_date) %>%
@@ -124,8 +143,8 @@ combined_daily %>%
                      plot.subtitle = element_text(size = 11, margin=margin(0, 0, 10, 0)),
                      legend.text = element_text(face = "bold", size = 9)) +
   labs(x = "", y = "", fill = "", 
-       title = "Scotland COVID-19 Cases & Keys",
-       # title = "Scotland COVID-19 Cases & Keys Since 1M Downloads",
+       # title = "Scotland COVID-19 Cases & Keys",
+       title = "Scotland COVID-19 Cases & Keys Since 1M Downloads",
        subtitle = expression(paste(bold("cumulative new cases "), "and", bold(" cumulative new keys "), "(downloaded by the ", italic("protect.scot")," app)")))
 
-ggsave("pics/plot_cum_cases_keys.png", dpi = 300, width = 200, height = 133, units = "mm")
+ggsave("pics/plot_cum_cases_keys_sep17.png", dpi = 300, width = 200, height = 133, units = "mm")
