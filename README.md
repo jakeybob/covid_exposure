@@ -34,12 +34,23 @@ Here we can see the daily number of downloaded keys compared to the daily COVID-
 ![](/pics/plot_cases_keys.png)
 
 ## Cumulative Cases / Keys Since September 17th
-To compare the cumulative number of new cases to the cumulative number of new keys, we'll start from September 17th. This was the date the app reached one million downloads, which seems like as good a milestone as any. We can see that about 40% of the new cases have been registered via the app since then.
+To compare the cumulative number of new cases to the cumulative number of new keys, we'll start from September 17th. This was the date the app reached one million downloads, which seems like as good a milestone as any. We can see that about 50% of the new cases have been registered via the app since then.
 
 ![](/pics/plot_cum_cases_keys_sep17.png)
+
+## Comparisons Between Phones
+As phones should all be downloading the same set/s of diagnosis keys, the information in two phones' exposure notification files should be essentially identical in terms of total keys downloaded, and differ only in terms of polling frequency and number of keys downloaded each time.
+
+Here we can see numbers of keys downloaded over time for two separate phones (whose exposure notification files were exported within a few minutes of each other). One phone polls frequently and downloads (relatively) fewer keys each time, whereas the other phone polls infrequently and downloads more keys at once.
+
+![](/pics/plot_new_two_phones.png)
+
+Looking at this cumulatively exposes the issue -- the owner of *phone 2* spends days at a time without downloading new keys. At the time these data files were exported the owner of *phone 2* has less than half the number of keys downloaded (compared to *phone 1*), and would not be notified of an exposure match until they had downloaded the relevant key.
+
+![](/pics/plot_cum_two_phones.png)
 
 
 ## Conclusion
 
-Cautious optimism! It looks like a significant proportion of known cases are self-reporting via the app, which can only be a help to the general contact tracing efforts.
+Cautious optimism! It looks like a significant proportion of known cases are self-reporting via the app, which can only be a help to the general contact tracing efforts. The disparity in polling frequencies between devices may warrant further investigation!
 

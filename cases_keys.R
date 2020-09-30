@@ -3,10 +3,7 @@ library(jsonlite)
 library(lubridate)
 library(ckanr)
 library(scales)
-
-# exported file formats are slightly different, so set to "iPhone" or "Android" here
-file_exported_from <- "iphone"
-
+source("UTILS.R")
 
 #### DAILY CASES (SCOTLAND LEVEL OPEN DATA) ####
 ckanr_setup(url = "https://www.opendata.nhs.scot/")
@@ -19,46 +16,7 @@ covid_cases <- ckan_fetch(x=covid_cases_resource$url) %>%
 
 
 #### DAILY DOWNLOADED POSITIVE KEYS FROM PROTECT.SCOT APP ####
-# json files exported from iOS "Exposure Notifications" Settings pane or Android Google settings
-
-data_dir <- "json_exposure_files" # folder containing .json exported files
-
-# read in files
-files <- file.path(data_dir, dir(data_dir)) 
-for(file in files){
-  if(file == files[1]){df <- tibble()}
-  file_data <- fromJSON(file)
-
-  if(toupper(file_exported_from) == "IPHONE"){
-    for(i in 1:length(file_data$ExposureChecks$Timestamp)){
-      df <- df %>% 
-        bind_rows(tibble(file_data$ExposureChecks$Files[[i]]["Hash"] ,
-                         file_data$ExposureChecks$Files[[i]]["Timestamp"],
-                         file_data$ExposureChecks$Files[[i]]["MatchCount"],
-                         file_data$ExposureChecks$Files[[i]]["KeyCount"]) %>%
-                    rename(hash = Hash, timestamp = Timestamp, match_count = MatchCount, key_count = KeyCount) %>% 
-                    select(hash, timestamp, match_count, key_count) %>% 
-                    mutate(timestamp = as_datetime(timestamp)) )
-    }
-  }
-
-  if(toupper(file_exported_from) == "ANDROID"){
-    df <- df %>%
-      bind_rows(as_tibble(file_data) %>%
-                  rename(key_count = keyCount, match_count = matchesCount) %>%
-                  select(hash, timestamp, match_count, key_count) %>%
-                  mutate(timestamp = dmy_hms(timestamp)) )
-  }
-  rm(file_data)
-}
-
-# combine json data, format and remove duplicate entries -- likely many as files from subsequent
-# days will overlap 13 days of data.
-# (provided key count = positive cases entered into app (and their key subsequently downloaded))
-df <- df %>% 
-  arrange(desc(timestamp)) %>%
-  mutate(date = date(timestamp)) %>%
-  distinct()
+df <- import_exposure_keys()
 
 # summarise to day level (as more than one key download batch per day) and join to cases data
 combined_daily <- df %>% 
