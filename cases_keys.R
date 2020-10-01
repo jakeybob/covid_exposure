@@ -32,6 +32,14 @@ combined_daily <- df %>%
 library(showtext)
 font_add_google(name = "Lato") # https://fonts.google.com
 showtext_auto()
+theme_set(theme_bw() + theme(panel.grid.minor = element_blank(),
+                               text = element_text(family = "Lato"),
+                               legend.position = "bottom",
+                               legend.box.margin = margin(-10, 0, 0, 0),
+                               axis.text = element_text(face = "bold", size = 10),
+                               plot.title = element_text(face = "bold", size = 16),
+                               plot.subtitle = element_text(size = 11, margin=margin(0, 0, 10, 0)),
+                               legend.text = element_text(face = "bold", size = 9)))
 
 # new daily cases / keys
 combined_daily %>%
@@ -42,14 +50,6 @@ combined_daily %>%
   scale_fill_manual(values = c("#77bedb",
                                rgb(107, 17, 165, maxColorValue = 255, alpha = 220))) +
   scale_y_continuous(labels = scales::comma) +
-  theme_bw() + theme(panel.grid.minor = element_blank(),
-                     text = element_text(family = "Lato"),
-                     legend.position = "bottom",
-                     legend.box.margin = margin(-10, 0, 0, 0),
-                     axis.text = element_text(face = "bold", size = 10),
-                     plot.title = element_text(face = "bold", size = 16),
-                     plot.subtitle = element_text(size = 11, margin=margin(0, 0, 10, 0)),
-                     legend.text = element_text(face = "bold", size = 9)) +
   labs(x = "", y = "", fill = "", 
        title = "Scotland COVID-19 Cases & Keys", 
        subtitle = expression(paste(bold("new cases "), "and", bold(" new keys "), "(downloaded by the ", italic("protect.scot")," app)")))
@@ -70,16 +70,9 @@ combined_daily %>%
   filter(date != max(date)) %>% # most decent entry may have quite incomplete case data
   ggplot(aes(x = date, y = ratio)) +
   geom_line() + geom_point() +
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-  theme_bw() + theme(panel.grid.minor = element_blank(),
-                     text = element_text(family = "Lato"),
-                     legend.position = "bottom",
-                     legend.box.margin = margin(-10, 0, 0, 0),
-                     axis.text = element_text(face = "bold", size = 10),
-                     plot.title = element_text(face = "bold", size = 16),
-                     plot.subtitle = element_text(size = 11, margin=margin(0, 0, 10, 0)),
-                     legend.text = element_text(face = "bold", size = 9)) 
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1))
 
+# trend of cumlative cases and keys
 combined_daily %>%
   filter(date >= min_date) %>%
   # replace_na(list(key_count = 0, new_cases = 0)) %>%
@@ -92,14 +85,6 @@ combined_daily %>%
   scale_fill_manual(values = c("#77bedb",
                                rgb(107, 17, 165, maxColorValue = 255, alpha = 220))) +
   scale_y_continuous(labels = scales::comma) +
-  theme_bw() + theme(panel.grid.minor = element_blank(),
-                     text = element_text(family = "Lato"),
-                     legend.position = "bottom",
-                     legend.box.margin = margin(-10, 0, 0, 0),
-                     axis.text = element_text(face = "bold", size = 10),
-                     plot.title = element_text(face = "bold", size = 16),
-                     plot.subtitle = element_text(size = 11, margin=margin(0, 0, 10, 0)),
-                     legend.text = element_text(face = "bold", size = 9)) +
   labs(x = "", y = "", fill = "", 
        # title = "Scotland COVID-19 Cases & Keys",
        title = "Scotland COVID-19 Cases & Keys Since 1M Downloads",

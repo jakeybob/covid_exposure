@@ -13,6 +13,7 @@ Some useful links that outline this are:
 * [Apple's Exposure Notifications site](https://covid19.apple.com/contacttracing)
 * [Apple/Google Exposure Notification FAQ doc](https://static.googleusercontent.com/media/www.google.com/en//covid19/exposurenotifications/pdfs/Exposure-Notification-FAQ-v1.2.pdf)
 * [Bluetooth Specifaction doc](https://blog.google/documents/70/Exposure_Notification_-_Bluetooth_Specification_v1.2.2.pdf)
+* [Protect Scotland app code repo](https://github.com/NES-Digital-Service/protect-scotland)
 
 ## Exposure Notification Export Files
 
