@@ -45,7 +45,7 @@ Here we can see numbers of keys downloaded over time for two separate phones (wh
 
 ![](/pics/plot_new_two_phones.png)
 
-Looking at this cumulatively exposes the issue -- the owner of *phone 2* spends days at a time without downloading new keys. At the time these data files were exported the owner of *phone 2* has less than half the number of keys downloaded (compared to *phone 1*), and would not be notified of an exposure match until they had downloaded the relevant key.
+Looking at this cumulatively exposes the issue -- the owner of *phone 2* spends days at a time without downloading new keys. At the time these data files were exported the owner of *phone 2* recently had less than half the number of keys downloaded compared to *phone 1* (and would not be notified of an exposure match until they had downloaded a relevant key), but then suddenly caught up by dowloading over 2,500 keys at once.
 
 ![](/pics/plot_cum_two_phones.png)
 
