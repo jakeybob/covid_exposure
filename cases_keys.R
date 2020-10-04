@@ -91,3 +91,51 @@ combined_daily %>%
        subtitle = expression(paste(bold("cumulative new cases "), "and", bold(" cumulative new keys "), "(downloaded by the ", italic("protect.scot")," app)")))
 
 ggsave("pics/plot_cum_cases_keys_sep17.png", dpi = 300, width = 200, height = 133, units = "mm")
+
+# #### CORRELATION ####
+# # strip out NA and dates with incomplete data
+# df_stripped <- combined_daily %>%
+#   filter(is.na(new_cases)==F) %>%
+#   filter(date >= min_date) %>%
+#   filter(date != max(date))
+# 
+# # construct correlation + conf intervals over sliding daily window (need at least 4 days worth for conf.ints)
+# for(day_slide in 1:(dim(df_stripped)[1]-4)){
+#   if(day_slide == 1){
+#     cor_vec <- numeric(length = (dim(df_stripped)[1]-4))
+#     upper_95 <- numeric(length = (dim(df_stripped)[1]-4))
+#     lower_95 <- numeric(length = (dim(df_stripped)[1]-4))
+#     }
+# 
+#   vals <- cor.test(lead(df_stripped$new_cases, n = day_slide-1)[1:(length(df_stripped$new_cases) - day_slide)], df_stripped$key_count[1:(length(df_stripped$new_cases) - day_slide)],
+#            alternative = "two.sided")
+#   cor_vec[day_slide] <- vals$estimate
+#   upper_95[day_slide] <- vals$conf.int[1]
+#   lower_95[day_slide] <- vals$conf.int[2]
+# 
+#   if(day_slide == (dim(df_stripped)[1]-4)){cor_df <- tibble(day_slide = 0:(dim(df_stripped)[1]-5),
+#                                               cor = cor_vec,
+#                                               upper_95 = upper_95,
+#                                               lower_95 = lower_95,
+#                                               snr = abs(cor/(upper_95 - lower_95)))}
+#   }
+# 
+# cor_df %>%
+#   ggplot(aes(x = day_slide, y = snr)) +
+#   geom_point() +
+#   geom_line()
+# 
+# cor_df %>%
+#   ggplot(aes(x = day_slide, y = cor)) +
+#   geom_ribbon(aes(ymin=lower_95, ymax=upper_95), alpha=.4) +
+#   geom_point() +
+#   geom_line()
+# 
+# n <- 0 # n = day shift with best correlation
+# df_stripped %>%
+#   mutate(new_cases = lead(new_cases, n)) %>%
+#   filter(is.na(new_cases) == FALSE) %>%
+#   pivot_longer(c(new_cases, key_count), names_to = "case_type", values_to = "count") %>%
+#   mutate(case_type = if_else(case_type == "key_count", "new keys", "new cases")) %>%
+#   ggplot(aes(x = date, y = count, fill = case_type)) +
+#   geom_col(width = 1, position = "identity")

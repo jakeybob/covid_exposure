@@ -35,7 +35,7 @@ Here we can see the daily number of downloaded keys compared to the daily COVID-
 ![](/pics/plot_cases_keys.png)
 
 ## Cumulative Cases / Keys Since September 17th
-To compare the cumulative number of new cases to the cumulative number of new keys, we'll start from September 17th. This was the date the app reached one million downloads, which seems like as good a milestone as any. We can see that about 50% of the new cases have been registered via the app since then.
+To compare the cumulative number of new cases to the cumulative number of new keys, we'll start from September 17th. This was the date the app reached one million downloads, which seems like as good a milestone as any. We can see that more than 50% of the new cases have been registered via the app since then.
 
 ![](/pics/plot_cum_cases_keys_sep17.png)
 
