@@ -131,7 +131,7 @@ ggsave("pics/plot_cum_cases_keys_sep17.png", dpi = 300, width = 200, height = 13
 #   geom_point() +
 #   geom_line()
 # 
-# n <- 0 # n = day shift with best correlation
+# n <- 1 # n = day shift with best correlation
 # df_stripped %>%
 #   mutate(new_cases = lead(new_cases, n)) %>%
 #   filter(is.na(new_cases) == FALSE) %>%
