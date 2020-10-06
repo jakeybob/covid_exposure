@@ -72,7 +72,7 @@ combined_daily %>%
   geom_line() + geom_point() +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1))
 
-# trend of cumlative cases and keys
+# trend of cumluative cases and keys
 combined_daily %>%
   filter(date >= min_date) %>%
   # replace_na(list(key_count = 0, new_cases = 0)) %>%
