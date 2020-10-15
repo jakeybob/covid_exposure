@@ -139,3 +139,13 @@ ggsave("pics/plot_cum_cases_keys_sep17.png", dpi = 300, width = 200, height = 13
 #   mutate(case_type = if_else(case_type == "key_count", "new keys", "new cases")) %>%
 #   ggplot(aes(x = date, y = count, fill = case_type)) +
 #   geom_col(width = 1, position = "identity")
+# 
+# # update frequency
+# df %>%
+#   select(timestamp) %>%
+#   distinct() %>%
+#   arrange(timestamp) %>%
+#   mutate(time_delta = timestamp %--% lead(timestamp) / hours(1)) %>%
+#   ggplot(aes(x = time_delta)) +
+#   geom_density()
+
