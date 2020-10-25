@@ -17,6 +17,7 @@ covid_cases <- ckan_fetch(x=covid_cases_resource$url) %>%
 
 #### DAILY DOWNLOADED POSITIVE KEYS FROM PROTECT.SCOT APP ####
 df <- import_exposure_keys()
+df %>% filter(match_count != 0) # print rows with non-zero match counts
 
 # summarise to day level (as more than one key download batch per day) and join to cases data
 combined_daily <- df %>% 
